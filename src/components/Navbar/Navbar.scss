@@ -1,0 +1,29 @@
+@import '../utils/colors';
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  background-color: #fff;
+  width: 100%;
+  &__header {
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: 700;
+    color: $fontColor;
+  }
+  &__login {
+    margin: {
+      left: auto;
+      right: 20px;
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1140px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+}

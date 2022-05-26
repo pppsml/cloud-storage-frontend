@@ -1,12 +1,17 @@
-import { action, userState } from "../types"
+import { UserState, AppActions, SET_USER } from "../types"
 
-const initState:userState = {
+const initState:UserState = {
   currentUser: null,
   isAuth: false,
 }
 
-const userReducer = (state:userState = initState, action:action) => {
+const userReducer = (state:UserState = initState, action:AppActions) => {
   switch (action.type) {
+    case SET_USER: 
+      return {
+        ...state,
+        
+      }
     default :
       return state
   }

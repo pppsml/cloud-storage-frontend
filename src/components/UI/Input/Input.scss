@@ -1,0 +1,23 @@
+@import '../../utils/colors';
+
+.input {
+  border: none;
+  border-bottom: 3px solid $fontColor;
+  background-color: transparent;
+  width: 100%;
+  padding: 3px;
+
+  transition: transform .2s ease-in-out;
+  &:not(:last-of-type) {
+    margin: 10px 20px;
+  }
+  &::placeholder {
+    color: $fontColor;
+    font-weight: 700;
+  }
+
+  &:focus {
+    outline: none;
+    transform: scale(1.02);
+  }
+}

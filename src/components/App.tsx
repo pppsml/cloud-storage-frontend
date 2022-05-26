@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.scss'
-import { Navbar, Registration } from '.'
+import { Navbar, Registration, Login } from '.'
 
 type Props = {
 
@@ -15,6 +15,7 @@ const App:React.FC<Props> = () => {
         <Navbar />
         <Routes>
           <Route path='/registration' element={<Registration />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </div>
     </BrowserRouter>

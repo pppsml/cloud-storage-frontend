@@ -1,11 +1,19 @@
 @import '../utils/colors';
 
 .navbar {
-  display: flex;
-  justify-content: center;
-  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
   background-color: #fff;
   width: 100%;
+  
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+  }
+
   &__header {
     margin-left: 10px;
     font-size: 24px;
@@ -18,12 +26,4 @@
       right: 20px;
     }
   }
-}
-
-.container {
-  width: 100%;
-  max-width: 1140px;
-  padding: 0 15px;
-  display: flex;
-  align-items: center;
 }

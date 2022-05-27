@@ -1,10 +1,10 @@
-import { action } from "../types"
+import { AppActions } from "../types"
 
 const initState = {
 
 }
 
-const fileReducer = (state = initState, action:action) => {
+const fileReducer = (state = initState, action:AppActions) => {
   switch (action.type) {
     default :
       return state

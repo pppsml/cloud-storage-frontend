@@ -3,20 +3,27 @@ import React from 'react'
 import './Input.scss'
 
 type Props = {
+  value?: string,
+  className?: string,
+
   type?: React.HTMLInputTypeAttribute,
   placeholder?: string,
-  className?: string,
-  value?: string,
+  name?: string,
+  autoComplete?: 'on' | 'off',
 
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
 const Input:React.FC<Props> = React.memo((props) => {
   const {
+    value,
+    className = '',
+
     type = 'text',
     placeholder,
-    className = '',
-    value,
+    name = '',
+    autoComplete = 'on',
+
     onChange,
   } = props
 
@@ -24,8 +31,12 @@ const Input:React.FC<Props> = React.memo((props) => {
     <input 
       value={value} 
       className={`input ${className}`} 
+
       type={type} 
       placeholder={placeholder ?? ''} 
+      name={name}
+      autoComplete={autoComplete}
+
       onChange={onChange} 
     />
   )

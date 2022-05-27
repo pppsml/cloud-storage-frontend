@@ -33,8 +33,8 @@ const Login:React.FC<Props> = (props) => {
     <div className='authorization__wrapper'>
       <div className='authorization'>
         <p className='authorization__header'>Авторизация</p>
-        <Input value={email} onChange={emailChangeHandler} placeholder='Email' />
-        <Input value={password} onChange={passwordChangeHandler} type='password' placeholder='Password' />
+        <Input name='email' value={email} onChange={emailChangeHandler} placeholder='Email' />
+        <Input name='password' value={password} onChange={passwordChangeHandler} type='password' placeholder='Password' />
         <Button onClick={loginClickHandler}>Войти</Button>
       </div>
     </div>

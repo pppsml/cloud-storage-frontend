@@ -22,8 +22,8 @@ export const login = ( email: string, password: string):MyThunkAction => {
       const response = await axios.post('http://localhost:5001/api/auth/login', {
         email, password
       })
-      dispatch(setUser(response.data))
-      console.log(response.data)
+      dispatch(setUser(response.data.user))
+      localStorage.setItem('token', response.data.token)
     } catch (error:any) {
       alert(error.response.data.message)
     }

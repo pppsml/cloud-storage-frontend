@@ -1,11 +1,11 @@
-import { UserState, AppActions, SET_USER, LOGOUT } from "../types"
+import { IUserState, AppActions, SET_USER, LOGOUT } from "../types"
 
-const initState:UserState = {
+const initState:IUserState = {
   currentUser: null,
   isAuth: false,
 }
 
-const userReducer = (state:UserState = initState, action:AppActions):UserState => {
+const userReducer = (state = initState, action:AppActions):IUserState => {
   switch (action.type) {
     case SET_USER: 
       return {

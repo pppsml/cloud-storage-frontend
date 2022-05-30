@@ -6,3 +6,4 @@ export { default as Button } from './UI/Button'
 
 export { default as Registration } from './Authorization/Registration';
 export { default as Login } from './Authorization/Login';
+export { default as Disk } from './Disk';

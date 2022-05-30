@@ -1,10 +1,11 @@
-import { LOGOUT, SetLogout, SetUserAction, SET_USER, UserState } from "../types";
+import { LOGOUT, LogoutAction, SET_USER, UserAC } from "../types";
 
-export const setUser = (data:UserState):SetUserAction => ({
+export const setUser:UserAC = (data) => ({
   type: SET_USER,
   payload: data
 })
 
-export const setLogout:SetLogout = {
+export const setLogout:LogoutAction = {
   type: LOGOUT,
+  payload: null,
 }

@@ -1,24 +1,64 @@
-// actions
-export const SET_USER = 'SET_USER'
-export const LOGOUT = 'LOGOUT'
+// *state
 
+// FILE
+export type Files = any[] | null
+export type CurrentDir = string | null
 
-
-interface _MyAction<T, P> {
-  type: T,
-  payload?: P,
+export interface IFileState {
+  files: Files,
+  currentDir: CurrentDir
 }
 
-export type UserState = {
+// USER
+export interface IUserState {
   currentUser: Object | null,
   isAuth: boolean,
 }
 
-export type SetUserAction = _MyAction<typeof SET_USER, UserState>
-export type SetLogout = _MyAction<typeof LOGOUT, null | undefined>
 
-export type AppActions = SetUserAction | SetLogout
 
-export type AppState = {
-  user: UserState,
+
+export interface IAppState {
+  user: IUserState,
+  file: IFileState,
 }
+
+
+
+// *actions
+interface _MyAction<T, P> {
+  type: T,
+  payload: P,
+}
+
+// USER
+export const SET_USER = 'SET_USER'
+export const LOGOUT = 'LOGOUT'
+
+export type UserAction = _MyAction<typeof SET_USER, IUserState>
+export type LogoutAction = _MyAction<typeof LOGOUT, null>
+
+// FILE
+export const SET_FILES = 'SET_FILES'
+export const SET_CURRENT_DIR = 'SET_CURRENT_DIR'
+
+export type FilesAction = _MyAction<typeof SET_FILES, Files>
+export type CurrentDirAction = _MyAction<typeof SET_CURRENT_DIR, CurrentDir>
+
+
+
+export type AppActions = 
+  UserAction
+  | LogoutAction
+  | FilesAction
+  | CurrentDirAction
+
+
+// *action creators
+
+// USER
+export type UserAC = (data:IUserState) => UserAction
+
+//FILE
+export type FilesAC = (files:Files) => FilesAction
+export type CurrentDirAC = (currentDir:CurrentDir) => CurrentDirAction

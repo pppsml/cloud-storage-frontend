@@ -4,13 +4,12 @@ import { login } from '../../api/user';
 import { Input, Button } from '..';
 
 import './index.scss';
-import { useDispatch } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppActions, AppState } from '../../redux/types';
+
+import useTypedDispatch from '../../hooks/useTypedDispatch';
 
 type Props = {}
 const Login:React.FC<Props> = (props) => {
-  const dispatch:ThunkDispatch<AppState, any, AppActions> = useDispatch()
+  const dispatch = useTypedDispatch()
 
   const [ email, setEmail ] = React.useState<string>('')
   const [ password, setPassword ] = React.useState<string>('')

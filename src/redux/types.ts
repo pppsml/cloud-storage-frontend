@@ -1,5 +1,7 @@
 // *state
 
+import { ThunkAction } from "redux-thunk"
+
 // FILE
 export type Files = any[] | null
 export type CurrentDir = string | null
@@ -52,6 +54,8 @@ export type AppActions =
   | LogoutAction
   | FilesAction
   | CurrentDirAction
+
+export type MyThunkAction = ThunkAction<Promise<void>, IAppState, unknown, AppActions>
 
 
 // *action creators

@@ -4,7 +4,7 @@ type Props = {}
 
 const FileList:React.FC<Props> = (props) => {
   return (
-    <div>Disk</div>
+    <div>FileList</div>
   )
 }
 

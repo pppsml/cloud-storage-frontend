@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.scss'
 import { Navbar, Registration, Login, Disk } from '.'
-import { auth } from '../api/user';
+import { auth } from '../redux/actions/user';
 import useTypedSelector from '../hooks/useTypedSelector';
 import useTypedDispatch from '../hooks/useTypedDispatch';
 
@@ -28,10 +28,12 @@ const App:React.FC<Props> = () => {
           ? <Routes>
             <Route path='/registration' element={<Registration />} />
             <Route path='/login' element={<Login />} />
+            <Route path='*' element={<Navigate to='/login' />} />
           </Routes>
 
           : <Routes>
             <Route path='/' element={<Disk />} />
+            <Route path='*' element={<Navigate to='/' />} />
           </Routes>
         }
       </div>

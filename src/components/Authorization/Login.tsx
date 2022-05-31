@@ -1,14 +1,17 @@
-import React, { MouseEventHandler } from 'react'
+import React, { FormEventHandler } from 'react'
 
-import { login } from '../../api/user';
+import { login } from '../../redux/actions/user';
 import { Input, Button } from '..';
 
 import './index.scss';
 
 import useTypedDispatch from '../../hooks/useTypedDispatch';
+import useTypedSelector from '../../hooks/useTypedSelector';
+import { Navigate } from 'react-router-dom';
 
 type Props = {}
 const Login:React.FC<Props> = (props) => {
+  const isAuth = useTypedSelector(({user}) => user.isAuth)
   const dispatch = useTypedDispatch()
 
   const [ email, setEmail ] = React.useState<string>('')
@@ -22,22 +25,26 @@ const Login:React.FC<Props> = (props) => {
     setPassword(e.target.value)
   }
 
-  const loginClickHandler:MouseEventHandler<HTMLButtonElement> = () => {
+  const handleSubmit:FormEventHandler<HTMLFormElement> = (e) => {
+    if (e && e.preventDefault) e.preventDefault()
     if (!email && !password) return
 
     dispatch(login(email, password))
   }
 
-  return (
-    <div className='authorization__wrapper'>
-      <div className='authorization'>
-        <p className='authorization__header'>Авторизация</p>
-        <Input name='email' value={email} onChange={emailChangeHandler} placeholder='Email' />
-        <Input name='password' value={password} onChange={passwordChangeHandler} type='password' placeholder='Password' />
-        <Button onClick={loginClickHandler}>Войти</Button>
+  return <>    
+    { isAuth
+      ? <Navigate to='/' />
+      : <div className='authorization__wrapper'>
+        <form onSubmit={handleSubmit} className='authorization'>
+          <p className='authorization__header'>Авторизация</p>
+          <Input name='email' value={email} onChange={emailChangeHandler} placeholder='Email' />
+          <Input name='password' value={password} onChange={passwordChangeHandler} type='password' placeholder='Password' />
+          <Button type='submit'>Войти</Button>
+        </form>
       </div>
-    </div>
-  )
+    }
+  </>
 }
 
 export default Login

@@ -1,4 +1,4 @@
-import React, { FormEventHandler } from 'react'
+import React, { FormEventHandler, useCallback } from 'react'
 
 import { registration } from '../../redux/actions/user';
 import { Input, Button } from '..';
@@ -15,13 +15,13 @@ const Registration:React.FC<Props> = (props) => {
   const [ email, setEmail ] = React.useState<string>('')
   const [ password, setPassword ] = React.useState<string>('')
 
-  const emailChangeHandler:React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const emailChangeHandler = useCallback<React.ChangeEventHandler<HTMLInputElement>>((e) => {
     setEmail(e.target.value)
-  }
+  }, [])
 
-  const passwordChangeHandler:React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const passwordChangeHandler = useCallback<React.ChangeEventHandler<HTMLInputElement>>((e) => {
     setPassword(e.target.value)
-  }
+  }, [])
 
   const handleSubmit:FormEventHandler<HTMLFormElement> = (e) => {
     if (e && e.preventDefault) e.preventDefault()
@@ -38,7 +38,7 @@ const Registration:React.FC<Props> = (props) => {
           <p className='authorization__header'>Регистрация</p>
           <Input name='email' value={email} onChange={emailChangeHandler} placeholder='Email' />
           <Input name='password' value={password} onChange={passwordChangeHandler} type='password' placeholder='Password' />
-          <Button type='submit'>Войти</Button>
+          <Button type='submit'>Зарегистрироваться</Button>
         </form>
       </div>
     }

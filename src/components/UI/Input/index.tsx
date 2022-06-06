@@ -27,6 +27,8 @@ const Input:React.FC<Props> = React.memo((props) => {
     onChange,
   } = props
 
+
+  
   return (
     <input 
       value={value} 

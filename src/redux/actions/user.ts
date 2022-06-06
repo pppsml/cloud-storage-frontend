@@ -46,7 +46,7 @@ export const auth = ():MyThunkAction => {
       dispatch(setUser(response.data.user))
       localStorage.setItem('token', response.data.token)
     } catch (error:any) {
-      alert(error.response.data.message)
+      console.log(error.response.data.message)
       localStorage.removeItem('token')
     }
   }

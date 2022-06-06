@@ -1,7 +1,7 @@
-import { AppActions, IFileState, SET_CURRENT_DIR, SET_FILES } from "../types"
+import { ADD_FILE, AppActions, IFileState, SET_CURRENT_DIR, SET_FILES } from "../types"
 
 const initState:IFileState = {
-  files: null,
+  files: [],
   currentDir: null,
 }
 
@@ -17,6 +17,12 @@ const fileReducer = (state = initState, action:AppActions):IFileState => {
       return {
         ...state,
         currentDir: action.payload,
+      }
+
+    case ADD_FILE:
+      return {
+        ...state,
+        files: [...state.files, action.payload]
       }
 
     default :

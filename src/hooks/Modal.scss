@@ -1,13 +1,15 @@
 @import '../components/utils/colors';
 
 .modal__wrapper {
-  background-color: rgba(0,0,0,0.5);
   position: fixed;
   height: 100%;
   width: 100%;
   inset:0;
-
+  
   padding: 16px;
+  background-color: rgba(0,0,0,0.5);
+  color: $fontColor;
+  backdrop-filter: blur(2px);
 
   display: flex;
   align-items: center;

@@ -20,7 +20,8 @@ export type CurrentDir = string | null
 
 export interface IFileState {
   files: Files,
-  currentDir: CurrentDir
+  currentDir: CurrentDir,
+  dirStack: CurrentDir[],
 }
 
 // USER
@@ -56,10 +57,12 @@ export type LogoutAction = _MyAction<typeof LOGOUT, null>
 export const SET_FILES = 'SET_FILES'
 export const SET_CURRENT_DIR = 'SET_CURRENT_DIR'
 export const ADD_FILE = 'ADD_FILE'
+export const PUSH_TO_STACK = 'PUSH_TO_STACK'
 
 export type FilesAction = _MyAction<typeof SET_FILES, Files>
 export type CurrentDirAction = _MyAction<typeof SET_CURRENT_DIR, CurrentDir>
 export type AddFileAction = _MyAction<typeof ADD_FILE, IFile>
+export type PushToStackAction = _MyAction<typeof PUSH_TO_STACK, CurrentDir>
 
 
 
@@ -71,6 +74,7 @@ export type AppActions =
   | FilesAction
   | CurrentDirAction
   | AddFileAction
+  | PushToStackAction
 
 export type MyThunkAction = ThunkAction<Promise<void>, IAppState, unknown, AppActions>
 
@@ -84,3 +88,4 @@ export type UserAC = (data:IUserState) => UserAction
 export type FilesAC = (files:Files) => FilesAction
 export type CurrentDirAC = (currentDir:CurrentDir) => CurrentDirAction
 export type AddFileAC = (file: IFile) => AddFileAction
+export type PushToStateAC = (dir: CurrentDir) => PushToStackAction

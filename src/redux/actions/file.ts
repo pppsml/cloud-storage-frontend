@@ -1,14 +1,14 @@
 import axios from 'axios'
-import { AddFileAC, ADD_FILE, CurrentDir, CurrentDirAC, FilesAC, MyThunkAction, SET_CURRENT_DIR, SET_FILES } from '../types'
+import { AddFileAC, ADD_FILE, CurrentDir, CurrentDirAC, FilesAC, MyThunkAction, PushToStateAC, PUSH_TO_STACK, SET_CURRENT_DIR, SET_FILES } from '../types'
 
 export const setFiles:FilesAC = ( files ) => ({
   type: SET_FILES,
-  payload: files
+  payload: files,
 })
 
 export const setCurrentDir:CurrentDirAC = ( currentDir ) => ({
   type: SET_CURRENT_DIR,
-  payload: currentDir
+  payload: currentDir,
 })
 
 export const addFile:AddFileAC = (file) => ({
@@ -16,12 +16,16 @@ export const addFile:AddFileAC = (file) => ({
   payload: file,
 })
 
+export const pushToStack:PushToStateAC = (dir) => ({
+  type: PUSH_TO_STACK,
+  payload: dir,
+})
 
 
 export const getFiles = (dirId: CurrentDir):MyThunkAction => {
   return async dispatch => {
     try {
-      const response = await axios.get(`http://localhost:5001/api/files${ dirId ? '?parent' + dirId : '' }`, {
+      const response = await axios.get(`http://localhost:5001/api/files${ dirId ? '?parent=' + dirId : '' }`, {
         headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
       })
       dispatch(setFiles(response.data))

@@ -27,7 +27,7 @@ const File:React.FC<IFile> = React.memo((props) => {
   }
 
   return (
-    <div className='file' onClick={openDirHandler}>
+    <div className='file' onClick={type === 'dir' ? openDirHandler : undefined}>
       <img 
         src={ type === 'dir' ? DirLogo : FileLogo } 
         alt={ type === 'dir' ? 'DirLogo' : 'FileLogo' } 

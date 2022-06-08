@@ -4,7 +4,7 @@ import useTypedDispatch from '../../hooks/useTypedDispatch'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import useModal from '../../hooks/useModal'
 
-import { createDir, getFiles, setCurrentDir } from '../../redux/actions/file'
+import { createDir, getFiles, setCurrentDir, uploadFile } from '../../redux/actions/file'
 
 import { Button, Input } from '..'
 import FileList from './FileList'
@@ -44,6 +44,11 @@ const Disk:React.FC<Props> = (props) => {
     if (backDirId !== undefined) dispatch(setCurrentDir(backDirId))
   }
 
+  const fileUploadHandler:React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const files = Array.from(event.target.files!)
+    files.forEach(file => dispatch(uploadFile(file, currentDir)))
+  }
+
 
   return (
     <div className="_container">
@@ -51,6 +56,12 @@ const Disk:React.FC<Props> = (props) => {
         <div className="disk__btns">
           <Button className="disk__back" onClick={backDirClickHandler}>Назад</Button>
           <Button className="disk__create" onClick={open}>Создать папку</Button>
+          <div className="disk__upload">
+            <label className='disk__upload--label'>
+              Загрузить файлы
+              <input onChange={fileUploadHandler} className='disk__upload--input' type='file' multiple />
+            </label>
+          </div>
         </div>
           <FileList />
           {

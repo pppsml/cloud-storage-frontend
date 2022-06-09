@@ -42,7 +42,7 @@ export const getFiles = (dirId: CurrentDir):MyThunkAction => {
 export const createDir = (dirId: CurrentDir, name:string):MyThunkAction => {
   return async dispatch => {
     try {
-      const response = await axios.post('', 
+      const response = await instanseAxios.post('', 
       {
         name,
         parent: dirId,
@@ -62,12 +62,15 @@ export const uploadFile = (file: File, dirId: CurrentDir):MyThunkAction => {
     try {
       const formData = new FormData()
       formData.append('file', file)
+      formData.append('fileName', file.name)
 
       if (dirId) {
         formData.append('parent', dirId)
       }
 
-      const response = await axios.post('/upload',
+      console.log(formData.get('file'))
+
+      const response = await instanseAxios.post('/upload',
       formData,
       {
         onUploadProgress: (progressEvent) => {

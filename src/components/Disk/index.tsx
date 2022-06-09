@@ -18,12 +18,17 @@ const Disk:React.FC<Props> = (props) => {
   const currentDir = useTypedSelector(({file}) => file.currentDir)
   const dirStack = useTypedSelector(({file}) => file.dirStack)
 
+  const [ isDragEnter, setDragEnter ] = useState<boolean>(false)
   const [ dirName, setDirName ] = useState<string>('')
   const { Modal, isOpened, open, close } = useModal()
+
+
 
   useEffect(() => {
     dispatch(getFiles(currentDir))
   }, [ currentDir ])
+
+
 
   const onCloseHandler = () => {
     close()
@@ -50,9 +55,33 @@ const Disk:React.FC<Props> = (props) => {
   }
 
 
+// drag event handlers
+  const dragEnterHandler:React.DragEventHandler<HTMLDivElement> = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    setDragEnter(true)
+  }
+
+  const dragLeaveHandler:React.DragEventHandler<HTMLDivElement> = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    setDragEnter(false)
+  }
+
+  const dropHandler:React.DragEventHandler<HTMLDivElement> = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    const files = Array.from(event.dataTransfer.files)
+    files.forEach(file => dispatch(uploadFile(file, currentDir)))
+    setDragEnter(false)
+  }
+
+
   return (
+    !isDragEnter
+    ?
     <div className="_container">
-      <div className="disk">
+      <div className="disk" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
         <div className="disk__btns">
           <Button className="disk__back" onClick={backDirClickHandler}>Назад</Button>
           <Button className="disk__create" onClick={open}>Создать папку</Button>
@@ -75,6 +104,12 @@ const Disk:React.FC<Props> = (props) => {
             </Modal>
             : null
           }
+      </div>
+    </div>
+    :
+    <div className="_container">
+      <div className='drop-area' onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
+        Перетащите файлы сюда
       </div>
     </div>
   )

@@ -18,7 +18,7 @@ const FileList:React.FC<Props> = (props) => {
       </div>
       {
         files 
-        && files.map(file => <File key={file._id} {...file} />)
+        && files.map(file => <File key={file._id} file={file} />)
       }
     </div>
   )

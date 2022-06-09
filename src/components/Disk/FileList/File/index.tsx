@@ -4,19 +4,27 @@ import DirLogo from '../../../../assets/img/dir.svg'
 import FileLogo from '../../../../assets/img/file.svg'
 import useTypedDispatch from '../../../../hooks/useTypedDispatch'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import { pushToStack, setCurrentDir } from '../../../../redux/actions/file'
+import { downloadFile, pushToStack, setCurrentDir } from '../../../../redux/actions/file'
 import { IFile } from '../../../../redux/types'
 
 import './File.scss'
 
-const File:React.FC<IFile> = React.memo((props) => {
+type Props = {
+  file: IFile
+}
+
+const File:React.FC<Props> = React.memo((props) => {
+  const {
+    file
+  } = props
+
   const {
     name,
     type,
     size,
     date,
     _id,
-  } = props
+  } = file
 
   const dispatch = useTypedDispatch()
   const currentDir = useTypedSelector(({file}) => file.currentDir)
@@ -24,6 +32,11 @@ const File:React.FC<IFile> = React.memo((props) => {
   const openDirHandler = () => {
     dispatch(pushToStack(currentDir))
     dispatch(setCurrentDir(_id))
+  }
+
+  const downloadClickHandler:React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation()
+    downloadFile(file)
   }
 
   return (
@@ -36,6 +49,8 @@ const File:React.FC<IFile> = React.memo((props) => {
       <div className="file__name">{name}</div>
       <div className="file__date">{date.slice(0, 10)}</div>
       <div className="file__size">{size}</div>
+      {type !== 'dir' && <button className="file__btn file__download" onClick={downloadClickHandler}>download</button>}
+      <button className="file__btn file__delete">delete</button>
     </div>
   )
 })

@@ -1,7 +1,13 @@
 @import '../utils/colors';
+@import '../utils/vars';
 
 .disk {
-  padding-top: 50px;
+  margin: {
+    top: $headerH + 20px;
+    bottom: 20px;
+  };
+
+  height: calc(100vh - #{$headerH} - 40px);
 
   &__btns {
     display: flex;
@@ -28,4 +34,22 @@
       display: none;
     }
   }
+}
+
+.drop-area {
+  margin: {
+    top: $headerH + 20px;
+    bottom: 20px;
+  };
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: calc(100vh - #{$headerH} - 40px);
+
+  border: 2px dashed $fontColor;
+
+  font-size: 40px;
 }

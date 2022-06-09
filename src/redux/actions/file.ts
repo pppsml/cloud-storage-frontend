@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AddFileAC, ADD_FILE, CurrentDir, CurrentDirAC, FilesAC, MyThunkAction, PushToStateAC, PUSH_TO_STACK, SET_CURRENT_DIR, SET_FILES } from '../types'
+import { AddFileAC, ADD_FILE, CurrentDir, CurrentDirAC, FilesAC, IFile, MyThunkAction, PushToStateAC, PUSH_TO_STACK, SET_CURRENT_DIR, SET_FILES } from '../types'
 
 export const setFiles:FilesAC = ( files ) => ({
   type: SET_FILES,
@@ -22,12 +22,15 @@ export const pushToStack:PushToStateAC = (dir) => ({
 })
 
 
+const instanseAxios = axios.create({
+  baseURL: 'http://localhost:5001/api/files',
+  headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+})
+
 export const getFiles = (dirId: CurrentDir):MyThunkAction => {
   return async dispatch => {
     try {
-      const response = await axios.get(`http://localhost:5001/api/files${ dirId ? '?parent=' + dirId : '' }`, {
-        headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-      })
+      const response = await instanseAxios.get(`${ dirId ? '?parent=' + dirId : '' }`)
       dispatch(setFiles(response.data))
     } catch (error:any) {
       alert(error.response.data.message)
@@ -39,16 +42,12 @@ export const getFiles = (dirId: CurrentDir):MyThunkAction => {
 export const createDir = (dirId: CurrentDir, name:string):MyThunkAction => {
   return async dispatch => {
     try {
-      const response = await axios.post('http://localhost:5001/api/files', 
+      const response = await axios.post('', 
       {
         name,
         parent: dirId,
         type: 'dir'
-      },
-      {
-        headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-      }
-      )
+      })
 
       dispatch(addFile(response.data))
     } catch (error:any) {
@@ -68,10 +67,9 @@ export const uploadFile = (file: File, dirId: CurrentDir):MyThunkAction => {
         formData.append('parent', dirId)
       }
 
-      const response = await axios.post('http://localhost:5001/api/files/upload',
+      const response = await axios.post('/upload',
       formData,
       {
-        headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
         onUploadProgress: (progressEvent) => {
           const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
           console.log('total', totalLength)
@@ -88,6 +86,23 @@ export const uploadFile = (file: File, dirId: CurrentDir):MyThunkAction => {
     } catch (error:any) {
       alert(error.response.data.message)
     }
+  }
+}
+
+export const downloadFile = async (file:IFile) => {
+  const response = await instanseAxios(`/download?id=${file._id}`, {
+    responseType: 'blob',
+  })
+
+  if (response.status === 200) {
+    const blob = await response.data
+    const downloadURL = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = downloadURL
+    link.download = file.name
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
   }
 }
 

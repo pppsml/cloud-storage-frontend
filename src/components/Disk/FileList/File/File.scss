@@ -28,4 +28,28 @@
     grid-column-start: 6;
     justify-self: center;
   }
+
+  &__btn {
+    display: none;
+  }
+
+  &:hover &__date {
+    grid-column-start: 3;
+  }
+
+  &:hover &__size {
+    grid-column-start: 4;
+  }
+
+  &:hover &__btn {
+    display: block;
+  }
+
+  &:hover &__download {
+    grid-column-start: 5;
+  }
+
+  &:hover &__delete {
+    grid-column-start: 6;
+  }
 }

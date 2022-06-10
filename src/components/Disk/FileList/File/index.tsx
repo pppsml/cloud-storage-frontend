@@ -4,7 +4,7 @@ import DirLogo from '../../../../assets/img/dir.svg'
 import FileLogo from '../../../../assets/img/file.svg'
 import useTypedDispatch from '../../../../hooks/useTypedDispatch'
 import useTypedSelector from '../../../../hooks/useTypedSelector'
-import { downloadFile, pushToStack, setCurrentDir } from '../../../../redux/actions/file'
+import { deleteFile, downloadFile, pushToStack, setCurrentDir } from '../../../../redux/actions/file'
 import { IFile } from '../../../../redux/types'
 
 import './File.scss'
@@ -39,6 +39,11 @@ const File:React.FC<Props> = React.memo((props) => {
     downloadFile(file)
   }
 
+  const deleteFileClickHandler:React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation()
+    dispatch(deleteFile(file))
+  }
+
   return (
     <div className='file' onClick={type === 'dir' ? openDirHandler : undefined}>
       <img 
@@ -50,7 +55,7 @@ const File:React.FC<Props> = React.memo((props) => {
       <div className="file__date">{date.slice(0, 10)}</div>
       <div className="file__size">{size}</div>
       {type !== 'dir' && <button className="file__btn file__download" onClick={downloadClickHandler}>download</button>}
-      <button className="file__btn file__delete">delete</button>
+      <button className="file__btn file__delete" onClick={deleteFileClickHandler}>delete</button>
     </div>
   )
 })

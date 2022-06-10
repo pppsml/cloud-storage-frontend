@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AddFileAC, ADD_FILE, CurrentDir, CurrentDirAC, FilesAC, IFile, MyThunkAction, PushToStateAC, PUSH_TO_STACK, SET_CURRENT_DIR, SET_FILES } from '../types'
+import { AddFileAC, ADD_FILE, CurrentDir, CurrentDirAC, DeleteFileAC, DELETE_FILE, FilesAC, IFile, MyThunkAction, PushToStateAC, PUSH_TO_STACK, SET_CURRENT_DIR, SET_FILES } from '../types'
 
 export const setFiles:FilesAC = ( files ) => ({
   type: SET_FILES,
@@ -21,6 +21,11 @@ export const pushToStack:PushToStateAC = (dir) => ({
   payload: dir,
 })
 
+export const deleteFileAC:DeleteFileAC = (id) => ({
+  type: DELETE_FILE,
+  payload: id,
+})
+
 
 const instanseAxios = axios.create({
   baseURL: 'http://localhost:5001/api/files',
@@ -30,7 +35,7 @@ const instanseAxios = axios.create({
 export const getFiles = (dirId: CurrentDir):MyThunkAction => {
   return async dispatch => {
     try {
-      const response = await instanseAxios.get(`${ dirId ? '?parent=' + dirId : '' }`)
+      const response = await instanseAxios.get(`/${ dirId ? '?parent=' + dirId : '' }`)
       dispatch(setFiles(response.data))
     } catch (error:any) {
       alert(error.response.data.message)
@@ -67,8 +72,6 @@ export const uploadFile = (file: File, dirId: CurrentDir):MyThunkAction => {
       if (dirId) {
         formData.append('parent', dirId)
       }
-
-      console.log(formData.get('file'))
 
       const response = await instanseAxios.post('/upload',
       formData,
@@ -109,3 +112,17 @@ export const downloadFile = async (file:IFile) => {
   }
 }
 
+
+
+export const deleteFile = (file: IFile):MyThunkAction => {
+  return async dispatch => {
+    try {
+      const response = await instanseAxios.delete(`?id=${file._id}`)
+      dispatch(deleteFileAC(file._id))
+
+      alert(response.data.message)
+    } catch (error:any) {
+      alert(error.response.data.message)
+    }
+  }
+}

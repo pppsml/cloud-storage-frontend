@@ -58,11 +58,13 @@ export const SET_FILES = 'SET_FILES'
 export const SET_CURRENT_DIR = 'SET_CURRENT_DIR'
 export const ADD_FILE = 'ADD_FILE'
 export const PUSH_TO_STACK = 'PUSH_TO_STACK'
+export const DELETE_FILE = 'DELETE_FILE'
 
 export type FilesAction = _MyAction<typeof SET_FILES, Files>
 export type CurrentDirAction = _MyAction<typeof SET_CURRENT_DIR, CurrentDir>
 export type AddFileAction = _MyAction<typeof ADD_FILE, IFile>
 export type PushToStackAction = _MyAction<typeof PUSH_TO_STACK, CurrentDir>
+export type DeleteFileAction = _MyAction<typeof DELETE_FILE, string>
 
 
 
@@ -75,6 +77,7 @@ export type AppActions =
   | CurrentDirAction
   | AddFileAction
   | PushToStackAction
+  | DeleteFileAction
 
 export type MyThunkAction = ThunkAction<Promise<void>, IAppState, unknown, AppActions>
 
@@ -89,3 +92,4 @@ export type FilesAC = (files:Files) => FilesAction
 export type CurrentDirAC = (currentDir:CurrentDir) => CurrentDirAction
 export type AddFileAC = (file: IFile) => AddFileAction
 export type PushToStateAC = (dir: CurrentDir) => PushToStackAction
+export type DeleteFileAC = (id: string) => DeleteFileAction

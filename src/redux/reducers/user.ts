@@ -13,7 +13,7 @@ const userReducer = (state = initState, action:AppActions):IUserState => {
         currentUser: {
           ...action.payload
         },
-        isAuth: true,
+        isAuth: !!action.payload,
       }
     case LOGOUT: 
       localStorage.removeItem('token')

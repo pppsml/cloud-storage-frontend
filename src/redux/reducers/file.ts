@@ -1,4 +1,4 @@
-import { ADD_FILE, PUSH_TO_STACK, SET_CURRENT_DIR, SET_FILES, AppActions, IFileState } from "../types"
+import { ADD_FILE, PUSH_TO_STACK, SET_CURRENT_DIR, SET_FILES, DELETE_FILE, AppActions, IFileState } from "../types"
 
 const initState:IFileState = {
   files: [],
@@ -30,6 +30,12 @@ const fileReducer = (state = initState, action:AppActions):IFileState => {
       return {
         ...state,
         dirStack: [...state.dirStack, action.payload]
+      }
+
+    case DELETE_FILE:
+      return {
+        ...state,
+        files: [...state.files.filter(file => file._id !== action.payload)]
       }
 
     default :
